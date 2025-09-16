@@ -2,10 +2,6 @@ from flask import Flask, url_for, request, redirect, abort
 import datetime
 app = Flask(__name__)
 
-@app.errorhandler(404)
-def not_found(err):
-    return "нет такой страницы", 404
-
 @app.route("/")
 @app.route("/index")
 def index():
@@ -118,6 +114,7 @@ def counter():
             </body> 
         </html>'''
 
+# Задание 2: Очистка счётчика
 @app.route("/lab1/clear_counter")
 def clear_counter():
     global count
@@ -145,6 +142,7 @@ def created():
             </body> 
         </html>''', 201
 
+# Задание 6: Коды ответов HTTP
 @app.route("/400")
 def A():
     return "400 - Неверный запрос", 400
@@ -169,7 +167,32 @@ def E():
 def F():
     return "418 - Я чайник", 418
 
-
+# Задание 7: Кастомная страница 404
+@app.errorhandler(404)
+def not_found(error):
+    return '''<!doctype html>
+        <html>
+            <head>
+                <title>404 - Страница не найдена</title>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        text-align: center; 
+                        background-color: #f0f0f0;
+                        color: #333;
+                    }
+                    h1 { color: #d32f2f; }
+                    img { max-width: 300px; }
+                </style>
+            </head>
+            <body>
+                <h1>404 - Страница не найдена</h1>
+                <p>К сожалению, запрашиваемая страница не существует.</p>
+                <img src="/static/404.png" alt="Страница не найдена">
+                <br>
+                <a href="/">Вернуться на главную</a>
+            </body>
+        </html>''', 404
 
 
 

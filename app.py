@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, redirect
+from flask import Flask, url_for, request, redirect, abort
 import datetime
 app = Flask(__name__)
 
@@ -144,3 +144,33 @@ def created():
                 <div><i>что-то создано...</i></div>
             </body> 
         </html>''', 201
+
+@app.route("/400")
+def A():
+    return "400 - Неверный запрос", 400
+
+@app.route("/401")
+def B():
+    return "401 - Неавторизован", 401
+
+@app.route("/402")
+def C():
+    return "402 - Требуется оплата", 402
+
+@app.route("/403")
+def D():
+    return "403 - Запрещено", 403
+
+@app.route("/405")
+def E():
+    return "405 - Метод не разрешен", 405
+
+@app.route("/418")
+def F():
+    return "418 - Я чайник", 418
+
+
+
+
+
+

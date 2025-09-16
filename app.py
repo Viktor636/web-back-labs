@@ -82,7 +82,8 @@ def author():
 def image():
     path = url_for("static", filename="DYB.jpg")
     css_path = url_for("static", filename="lab1.css")
-    return '''<!doctype html> 
+    
+    response = '''<!doctype html> 
         <html> 
             <head>
                 <link rel="stylesheet" href="''' + css_path + '''">
@@ -92,7 +93,8 @@ def image():
                 <img src="''' + path + '''">
             </body> 
         </html>'''
-
+    
+    return response
 count = 0
 
 @app.route("/lab1/counter")

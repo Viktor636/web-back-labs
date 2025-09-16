@@ -17,10 +17,10 @@ def web():
                 <br><a href="/image">image</a>
                 <br><a href="/counter">counter</a>
             </body> 
-        </html>""", 200, {
-            'X-Server': 'sample',
-            'Content-Type': 'text/plain; charset=utf-8'
-           }
+        </html>"""#, 200, {
+            #'X-Server': 'sample',
+            #'Content-Type': 'text/plain; charset=utf-8'
+           #}
 
 @app.route("/author")
 def author():
@@ -71,6 +71,19 @@ def counter():
                 Дата и время: ''' + str(time) + '''<br>
                 Запрошенный адрес: ''' + url + '''<br>
                 Ваш IP-адрес: ''' + client_ip + '''<br>
+            </body> 
+        </html>'''
+
+@app.route("/lab1/clear_counter")
+def clear_counter():
+    global count
+    count = 0
+    return '''<!doctype html> 
+        <html> 
+            <body> 
+                Счётчик очищен!
+                <br><a href="/lab1/counter">Перейти к счётчику</a>
+                <br><a href="/lab1/web">web</a>
             </body> 
         </html>'''
 

@@ -37,6 +37,7 @@ def lab1():
                 <a href="/">Корень сайта</a>
                 
                 <h2>Список роутов</h2> 
+                <!-- Задание 10 БЫЛО СДЕЛАНО В САМОМ НАЧАЛЕ-->
                 <ul>
                     <li><a href="/lab1/web">Web</a></li>
                     <li><a href="/lab1/author">Author</a></li>

@@ -194,6 +194,37 @@ def not_found(error):
             </body>
         </html>''', 404
 
+# Задание 8: Ошибка 500
+@app.route("/500")
+def server_error():
+    # Вызовем ошибку делением на ноль
+    result = 1 / 0
+    return "Этот код никогда не выполнится"
+
+# Задание 8: Кастомная страница 500
+@app.errorhandler(500)
+def internal_server_error(error):
+    return '''<!doctype html>
+        <html>
+            <head>
+                <title>500 - Ошибка сервера</title>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        text-align: center; 
+                        background-color: #fff0f0;
+                        color: #733;
+                    }
+                    h1 { color: #b71c1c; }
+                </style>
+            </head>
+            <body>
+                <h1>500 - Внутренняя ошибка сервера</h1>
+                <p>Произошла непредвиденная ошибка на сервере.</p>
+                <p>Пожалуйста, попробуйте позже или обратитесь к администратору.</p>
+                <a href="/">Вернуться на главную</a>
+            </body>
+        </html>''', 500
 
 
 

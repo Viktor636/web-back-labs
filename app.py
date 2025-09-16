@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, redirect, abort
+from flask import Flask, url_for, request, redirect, make_response
 import datetime
 app = Flask(__name__)
 
@@ -36,7 +36,7 @@ def lab1():
                 веб-приложений, сознательно предоставляющих лишь самые базовые возможности.</p>
                 <a href="/">Корень сайта</a>
                 
-                <h2>Список роутов</h2>
+                <h2>Список роутов</h2> 
                 <ul>
                     <li><a href="/lab1/web">Web</a></li>
                     <li><a href="/lab1/author">Author</a></li>
@@ -83,16 +83,24 @@ def image():
     path = url_for("static", filename="DYB.jpg")
     css_path = url_for("static", filename="lab1.css")
     
-    response = '''<!doctype html> 
+    # Создаем response объект
+    response = make_response(f'''<!doctype html> 
         <html> 
             <head>
-                <link rel="stylesheet" href="''' + css_path + '''">
+                <link rel="stylesheet" href="{css_path}">
             </head>
             <body> 
                 <h1>Дуб</h1>
-                <img src="''' + path + '''">
+                <img src="{path}">
             </body> 
-        </html>'''
+        </html>''')
+    
+    # Добавляем требуемые заголовки
+    response.headers['Content-Language'] = 'ru'  
+    
+    # Добавляем два произвольных заголовка
+    response.headers['X-My-Custom-Header'] = 'HelloFromFlask'
+    response.headers['X-Student-Name'] = 'Victor'
     
     return response
 count = 0

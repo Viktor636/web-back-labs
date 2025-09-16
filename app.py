@@ -17,7 +17,10 @@ def web():
                 <br><a href="/image">image</a>
                 <br><a href="/counter">counter</a>
             </body> 
-        </html>"""
+        </html>""", 200, {
+            'X-Server': 'sample',
+            'Content-Type': 'text/plain; charset=utf-8'
+            }
 
 @app.route("/author")
 def author():

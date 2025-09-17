@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, redirect, make_response
+from flask import Flask, url_for, request, redirect
 import datetime
 app = Flask(__name__)
 
@@ -65,7 +65,7 @@ def web():
 
 @app.route("/lab1/author")
 def author():
-    name = "Гайжабура Виктор Васильевич"
+    name = "Гайдабура Виктор Васильевич"
     group = "ФБИ-31"
     faculty = "ФБ"
 
@@ -85,25 +85,22 @@ def image():
     css_path = url_for("static", filename="lab1.css")
     
     # Создаем response объект
-    response = make_response(f'''<!doctype html> 
+    return '''<!doctype html> 
         <html> 
             <head>
-                <link rel="stylesheet" href="{css_path}">
+                <link rel="stylesheet" href="''' + css_path + '''">
             </head>
             <body> 
                 <h1>Дуб</h1>
-                <img src="{path}">
+                <img src="''' + path + '''">
             </body> 
-        </html>''')
+        </html>''', {
     
-    # Добавляем требуемые заголовки
-    response.headers['Content-Language'] = 'ru'  
     
-    # Добавляем два произвольных заголовка
-    response.headers['X-My-Custom-Header'] = 'HelloFromFlask'
-    response.headers['X-Student-Name'] = 'Victor'
+            'Content-Language': 'ru', 
+            'X-My-Custom-Header': 'HelloFromFlask',
+            'X-Student-Name': 'Victor'}
     
-    return response
 count = 0
 
 @app.route("/lab1/counter")
@@ -210,7 +207,7 @@ def not_found(error):
 def server_error():
     # Вызовем ошибку делением на ноль
     result = 1 / 0
-    return "Этот код никогда не выполнится"
+
 
 # Задание 8: Кастомная страница 500
 @app.errorhandler(500)

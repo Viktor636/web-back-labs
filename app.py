@@ -381,3 +381,31 @@ books = [
 @app.route('/lab2/books')
 def show_books():
     return render_template('books.html', books=books)
+
+# Список фруктов с картинками
+fruits = [
+    {'name': 'Яблоко', 'image': 'Summer/apple.jpeg', 'description': 'Сладкий и сочный фрукт'},
+    {'name': 'Банан', 'image': 'Summer/banana.jpeg', 'description': 'Желтый и богатый калием'},
+    {'name': 'Апельсин', 'image': 'Summer/citrus.jpg', 'description': 'Цитрусовый с витамином C'},
+    {'name': 'Клубника', 'image': 'Summer/Klubnika.jpg', 'description': 'Красная ягода с семечками'},
+    {'name': 'Виноград', 'image': 'Summer/Vinograd.jpg', 'description': 'Маленькие сладкие ягоды'},
+    {'name': 'Арбуз', 'image': 'Summer/Arbuz.jpg', 'description': 'Большой и водянистый'},
+    {'name': 'Груша', 'image': 'Summer/Gruza.jpg', 'description': 'Сочная с мягкой текстурой'},
+    {'name': 'Персик', 'image': 'Summer/Persik.jpg', 'description': 'Пушистый и ароматный'},
+    {'name': 'Ананас', 'image': 'Summer/Ananas.jpg', 'description': 'Тропический с колючей кожурой'},
+    {'name': 'Манго', 'image': 'Summer/mango.png', 'description': 'Сладкий тропический фрукт'},
+    {'name': 'Киви', 'image': 'Summer/Qiwu.png', 'description': 'Зеленый с мелкими семенами'},
+    {'name': 'Лимон', 'image': 'Summer/lemon.png', 'description': 'Кислый цитрусовый фрукт'},
+    {'name': 'Вишня', 'image': 'Summer/Vishnya.jpg', 'description': 'Маленькая красная косточковая'},
+    {'name': 'Слива', 'image': 'Summer/Sliva.jpg', 'description': 'Сочная с косточкой внутри'},
+    {'name': 'Малина', 'image': 'Summer/Malina.jpg', 'description': 'Нежная ароматная ягода'},
+    {'name': 'Голубика', 'image': 'Summer/Golobika.jpg', 'description': 'Маленькая синяя ягода'},
+    {'name': 'Гранат', 'image': 'Summer/Granat.jpg', 'description': 'С множеством сочных зерен'},
+    {'name': 'Папайя', 'image': 'Summer/papaya.jpg', 'description': 'Тропический оранжевый фрукт'},
+    {'name': 'Кокос', 'image': 'Summer/cocos.jpg', 'description': 'С твердой скорлупой и водой'},
+    {'name': 'Авокадо', 'image': 'Summer/avokado.jpeg', 'description': 'С маслянистой текстурой'}
+]
+
+@app.route('/lab2/fruits')
+def show_fruits():
+    return render_template('fruits.html', fruits=fruits)

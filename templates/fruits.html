@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 2{% endblock %}
+
+{% block main %}
+    <h1>Фрукты и ягоды</h1>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% for fruit in fruits %}
+        <div style="border: 1px solid #ccc; padding: 10px; width: 200px; text-align: center;">
+            <img src="{{ url_for('static', filename=fruit.image) }}" width="150" height="150">
+            <h3>{{ fruit.name }}</h3>
+            <p>{{ fruit.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

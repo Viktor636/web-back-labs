@@ -247,12 +247,42 @@ def a2():
 
 flower_list = ['роза', 'тюльпан', 'незабудка', 'ромашка']
 
+# Роут для вывода всех цветов
+@app.route('/lab2/all_flowers')
+def all_flowers():
+    flowers_html = ""
+    for i, flower in enumerate(flower_list):
+        flowers_html += f"<li>{i}. {flower}</li>"
+    
+    return f'''
+    <!doctype html>
+    <html>
+        <body>
+            <h1>Все цветы</h1>
+            <p>Количество: {len(flower_list)}</p>
+            <ul>
+                {flowers_html}
+            </ul>
+            <a href="/lab2/clear_flowers">Очистить список</a>
+        </body>
+    </html>
+    '''
+
 @app.route('/lab2/flowers/<int:flower_id>')
 def flowers(flower_id):
-    if flower_id >= len(flower_list):
+    if flower_id >= len(flower_list) or flower_id < 0:
         abort(404)
     else:
-        return "цветок: " + flower_id[flower_id]
+        return f'''
+        <!doctype html>
+        <html>
+            <body>
+                <h1>Цветок №{flower_id}</h1>
+                <p>Название: {flower_list[flower_id]} </p>
+                <a href="/lab2/all_flowers">Все цветы</a>
+            </body>
+        </html>
+        '''
 
 @app.route('/lab2/add_flower/<name>')
 def add_flower(name):
@@ -261,13 +291,28 @@ def add_flower(name):
 <!doctype html>
 <html>
     <body>
-    <h1>Добавлен новый цветок</h1>
-    <p>Название нового цветка: {name} </p>
+    <h1>Добавлен: {name}</h1>
     <p>Всего цветов: {len(flower_list)}</p>
-    <p>Полный список: {flower_list}</p>
+    <a href="/lab2/all_flowers">Все цветы</a>
     </body>
 </html>
 '''
+# Роут для очистки списка
+@app.route('/lab2/clear_flowers')
+def clear_flowers():
+    flower_list.clear()
+    return '''
+    <!doctype html>
+    <html>
+        <body>
+            <h1>Список очищен</h1>
+            <a href="/lab2/all_flowers">Все цветы</a>
+        </body>
+    </html>
+    '''
+@app.route('/lab2/add_flower/')
+def add_flower_empty():
+    return "вы не задали имя цветка", 400
 
 @app.route('/lab2/example')
 def example():

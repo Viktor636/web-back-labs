@@ -15,6 +15,9 @@ def index():
                 <ul>
                     <li><a href="/lab1">Первая лабораторная</a></li>
                 </ul>
+                <ul>
+                    <li><a href="/lab2/example">Вторая лабораторная</a></li>
+                </ul>
                 <footer>
                     Гайдабура Виктор Васильевич, ФБИ-31, 3 курс, 2025
                 </footer>
@@ -272,4 +275,11 @@ def example():
     group = "ФБИ-31"
     lab = "Лабораторная работа 2 "
     curs = "3 Курс"
-    return render_template('example.html', name=name, group=group, lab=lab, curs=curs)
+    fruits = [
+        {'name': 'Яблоки', 'price': 100},
+        {'name': 'Груши', 'price': 120},
+        {'name': 'апельсины', 'price': 80},
+        {'name': 'мандарины', 'price': 96},
+        {'name': 'манго', 'price': 312}
+    ]
+    return render_template('example.html', name=name, group=group, lab=lab, curs=curs, fruits=fruits)

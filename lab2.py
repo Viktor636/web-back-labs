@@ -54,7 +54,7 @@ def flowers(flower_id):
 
 @lab2.route('/lab2/add_flower/<name>')
 def add_flower(name):
-    flower_list.lab2end(name)
+    flower_list.append(name)
     return f'''
 <!doctype html>
 <html>

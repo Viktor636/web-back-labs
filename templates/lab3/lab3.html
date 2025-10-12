@@ -7,7 +7,21 @@
 {% block main %}
     <h1>Формы, cookie</h1>
     <div>
-        Привет, <span style="color: {{name_color}}">{{ name }}</span>!
+        Привет, <span style="color: {{name_color}}">
+        {% if name %}
+            {{ name }}
+        {% else %}
+            аноним
+        {% endif %}
+        </span>!
+    </div>
+    <div>
+        Возраст: 
+        {% if request.cookies.get('age') %}
+            {{ request.cookies.get('age') }}
+        {% else %}
+            не указан
+        {% endif %}
     </div>
     <div>Список сделанных страниц:</div>
     <ol>

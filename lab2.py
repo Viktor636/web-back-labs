@@ -100,18 +100,18 @@ def example():
         {'name': 'мандарины', 'price': 96},
         {'name': 'манго', 'price': 312}
     ]
-    return render_template('example.html', name=name, group=group, lab=lab, curs=curs, fruits=fruits)
+    return render_template('lab2/example.html', name=name, group=group, lab=lab, curs=curs, fruits=fruits)
 
 
 @lab2.route('/lab2/')
 def lab_2():
-    return render_template('lab2.html')
+    return render_template('lab2/lab2.html')
 
 
 @lab2.route('/lab2/filters')
 def filters():
     phrase = "0 <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
-    return render_template('filter.html', phrase = phrase)
+    return render_template('lab2/filter.html', phrase = phrase)
 
 
 @lab2.route('/lab2/calc/')
@@ -160,33 +160,33 @@ books = [
 
 @lab2.route('/lab2/books')
 def show_books():
-    return render_template('books.html', books=books)
+    return render_template('lab2/books.html', books=books)
 
 # Список фруктов с картинками
 fruits = [
-    {'name': 'Яблоко', 'image': 'Summer/apple.jpeg', 'description': 'Сладкий и сочный фрукт'},
-    {'name': 'Банан', 'image': 'Summer/banana.jpeg', 'description': 'Желтый и богатый калием'},
-    {'name': 'Апельсин', 'image': 'Summer/citrus.jpg', 'description': 'Цитрусовый с витамином C'},
-    {'name': 'Клубника', 'image': 'Summer/Klubnika.jpg', 'description': 'Красная ягода с семечками'},
-    {'name': 'Виноград', 'image': 'Summer/Vinograd.jpg', 'description': 'Маленькие сладкие ягоды'},
-    {'name': 'Арбуз', 'image': 'Summer/Arbuz.jpg', 'description': 'Большой и водянистый'},
-    {'name': 'Груша', 'image': 'Summer/Gruza.jpg', 'description': 'Сочная с мягкой текстурой'},
-    {'name': 'Персик', 'image': 'Summer/Persik.jpg', 'description': 'Пушистый и ароматный'},
-    {'name': 'Ананас', 'image': 'Summer/Ananas.jpg', 'description': 'Тропический с колючей кожурой'},
-    {'name': 'Манго', 'image': 'Summer/mango.png', 'description': 'Сладкий тропический фрукт'},
-    {'name': 'Киви', 'image': 'Summer/Qiwu.png', 'description': 'Зеленый с мелкими семенами'},
-    {'name': 'Лимон', 'image': 'Summer/lemon.png', 'description': 'Кислый цитрусовый фрукт'},
-    {'name': 'Вишня', 'image': 'Summer/Vishnya.jpg', 'description': 'Маленькая красная косточковая'},
-    {'name': 'Слива', 'image': 'Summer/Sliva.jpg', 'description': 'Сочная с косточкой внутри'},
-    {'name': 'Малина', 'image': 'Summer/Malina.jpg', 'description': 'Нежная ароматная ягода'},
-    {'name': 'Голубика', 'image': 'Summer/Golobika.jpg', 'description': 'Маленькая синяя ягода'},
-    {'name': 'Гранат', 'image': 'Summer/Granat.jpg', 'description': 'С множеством сочных зерен'},
-    {'name': 'Папайя', 'image': 'Summer/papaya.jpg', 'description': 'Тропический оранжевый фрукт'},
-    {'name': 'Кокос', 'image': 'Summer/cocos.jpg', 'description': 'С твердой скорлупой и водой'},
-    {'name': 'Авокадо', 'image': 'Summer/avokado.jpeg', 'description': 'С маслянистой текстурой'}
+    {'name': 'Яблоко', 'image': 'lab2/Summer/apple.jpeg', 'description': 'Сладкий и сочный фрукт'},
+    {'name': 'Банан', 'image': 'lab2/Summer/banana.jpeg', 'description': 'Желтый и богатый калием'},
+    {'name': 'Апельсин', 'image': 'lab2/Summer/citrus.jpg', 'description': 'Цитрусовый с витамином C'},
+    {'name': 'Клубника', 'image': 'lab2/Summer/Klubnika.jpg', 'description': 'Красная ягода с семечками'},
+    {'name': 'Виноград', 'image': 'lab2/Summer/Vinograd.jpg', 'description': 'Маленькие сладкие ягоды'},
+    {'name': 'Арбуз', 'image': 'lab2/Summer/Arbuz.jpg', 'description': 'Большой и водянистый'},
+    {'name': 'Груша', 'image': 'lab2/Summer/Gruza.jpg', 'description': 'Сочная с мягкой текстурой'},
+    {'name': 'Персик', 'image': 'lab2/Summer/Persik.jpg', 'description': 'Пушистый и ароматный'},
+    {'name': 'Ананас', 'image': 'lab2/Summer/Ananas.jpg', 'description': 'Тропический с колючей кожурой'},
+    {'name': 'Манго', 'image': 'lab2/Summer/mango.png', 'description': 'Сладкий тропический фрукт'},
+    {'name': 'Киви', 'image': 'lab2/Summer/Qiwu.png', 'description': 'Зеленый с мелкими семенами'},
+    {'name': 'Лимон', 'image': 'lab2/Summer/lemon.png', 'description': 'Кислый цитрусовый фрукт'},
+    {'name': 'Вишня', 'image': 'lab2/Summer/Vishnya.jpg', 'description': 'Маленькая красная косточковая'},
+    {'name': 'Слива', 'image': 'lab2/Summer/Sliva.jpg', 'description': 'Сочная с косточкой внутри'},
+    {'name': 'Малина', 'image': 'lab2/Summer/Malina.jpg', 'description': 'Нежная ароматная ягода'},
+    {'name': 'Голубика', 'image': 'lab2/Summer/Golobika.jpg', 'description': 'Маленькая синяя ягода'},
+    {'name': 'Гранат', 'image': 'lab2/Summer/Granat.jpg', 'description': 'С множеством сочных зерен'},
+    {'name': 'Папайя', 'image': 'lab2/Summer/papaya.jpg', 'description': 'Тропический оранжевый фрукт'},
+    {'name': 'Кокос', 'image': 'lab2/Summer/cocos.jpg', 'description': 'С твердой скорлупой и водой'},
+    {'name': 'Авокадо', 'image': 'lab2/Summer/avokado.jpeg', 'description': 'С маслянистой текстурой'}
 ]
 
 
 @lab2.route('/lab2/fruits')
 def show_fruits():
-    return render_template('fruits.html', fruits=fruits)
+    return render_template('lab2/fruits.html', fruits=fruits)

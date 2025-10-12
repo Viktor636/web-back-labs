@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    <h1>Оплата прошла успешно!</h1>
+    
+    <div><strong>Детали вашего заказа:</strong></div>
+    
+    <div>Напиток: 
+        {% if drink == 'cofee' %}кофе
+        {% elif drink == 'black-tea' %}черный чай
+        {% elif drink == 'green-tea' %}зеленый чай
+        {% else %}не указан
+        {% endif %}
+    </div>
+    
+    <div>Добавки:
+        {% if milk %}молоко {% endif %}
+        {% if sugar %}сахар{% endif %}
+        {% if not milk and not sugar %}без добавок{% endif %}
+    </div>
+    
+    <div>Стоимость: {{ price }} руб.</div>
+    
+    <div style="margin-top: 20px;">
+        <a href="/lab3/order">Сделать новый заказ</a>
+    </div>
+{% endblock %}

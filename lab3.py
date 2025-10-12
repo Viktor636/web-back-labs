@@ -85,3 +85,40 @@ def success():
                          price=price,
                          card=card,
                          name=name)
+
+
+@lab3.route('/lab3/settings')
+def settings():
+    color = request.args.get('color')
+    bg_color = request.args.get('bg_color')
+    font_size = request.args.get('font_size')
+    font_style = request.args.get('font_style')
+    font_weight = request.args.get('font_weight')
+    
+    if color or bg_color or font_size or font_style or font_weight:
+        resp = make_response(redirect('/lab3/settings'))
+        if color:
+            resp.set_cookie('color', color)
+        if bg_color:
+            resp.set_cookie('bg_color', bg_color)
+        if font_size:
+            resp.set_cookie('font_size', font_size)
+        if font_style:
+            resp.set_cookie('font_style', font_style)
+        if font_weight:
+            resp.set_cookie('font_weight', font_weight)
+        return resp
+    
+    color = request.cookies.get('color')
+    bg_color = request.cookies.get('bg_color')
+    font_size = request.cookies.get('font_size')
+    font_style = request.cookies.get('font_style')
+    font_weight = request.cookies.get('font_weight')
+    
+    resp = make_response(render_template('lab3/settings.html', 
+                                       color=color, 
+                                       bg_color=bg_color,
+                                       font_size=font_size,
+                                       font_style=font_style,
+                                       font_weight=font_weight))
+    return resp

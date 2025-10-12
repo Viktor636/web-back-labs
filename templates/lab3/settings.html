@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    <h1>Cookies</h1>
+    <form>
+        <div>
+            <label for="color">Выберите цвет текста:</label>
+            <input type="color" id="color" name="color" value="{{ color or '' }}">
+        </div>
+        
+        <div>
+            <label for="bg_color">Выберите цвет фона:</label>
+            <input type="color" id="bg_color" name="bg_color" value="{{ bg_color or '' }}">
+        </div>
+        
+        <div>
+            <label for="font_size">Размер шрифта (px):</label>
+            <input type="number" id="font_size" name="font_size" value="{{ font_size or '14' }}" min="8" max="72">
+        </div>
+        
+        <div>
+            <label>Начертание шрифта:</label><br>
+            <input type="radio" id="font_style_normal" name="font_style" value="normal" 
+                   {% if not font_style or font_style == 'normal' %}checked{% endif %}>
+            <label for="font_style_normal">Обычное</label>
+            
+            <input type="radio" id="font_style_italic" name="font_style" value="italic"
+                   {% if font_style == 'italic' %}checked{% endif %}>
+            <label for="font_style_italic">Курсив</label>
+        </div>
+        
+        <div>
+            <label>Жирность шрифта:</label><br>
+            <input type="radio" id="font_weight_normal" name="font_weight" value="normal"
+                   {% if not font_weight or font_weight == 'normal' %}checked{% endif %}>
+            <label for="font_weight_normal">Обычный</label>
+            
+            <input type="radio" id="font_weight_bold" name="font_weight" value="bold"
+                   {% if font_weight == 'bold' %}checked{% endif %}>
+            <label for="font_weight_bold">Жирный</label>
+        </div>
+        
+        <div>
+            <button type="submit">Применить стили</button>
+        </div>
+    </form>
+
+    <div style="margin-top: 20px;">
+        <a href="/lab3/settings?color=black&bg_color=white&font_size=14font_style=&font_weight=">
+            <button>Сбросить стили</button>
+        </a>
+    </div>
+{% endblock %}

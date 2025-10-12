@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    {% if fio %}
+
+    <h1>Железнодорожный билет</h1>
+    
+    <div>
+        <h2>БИЛЕТ №{{ ticket_number }}</h2>
+        
+        <div>Пассажир: {{ fio }}</div>
+        <div>Возраст: {{ age }} лет
+            {% if age|int < 18 %}
+                (Детский билет)
+            {% endif %}
+        </div>
+        <div>Маршрут: {{ departure }} > {{ destination }}</div>
+        <div>Дата поездки: {{ date }}</div>
+        <div>Место: {{ shelf }}</div>
+        
+        {% if linen == 'on' %}
+            <div>Бельё: включено</div>
+        {% endif %}
+        
+        {% if baggage == 'on' %}
+            <div>Багаж: включён</div>
+        {% endif %}
+        
+        {% if insurance == 'on' %}
+            <div>Страховка: включена</div>
+        {% endif %}
+        
+        <div>Итоговая стоимость: {{ price }} руб.</div>
+    </div>
+    
+    <div>
+        <a href="/lab3/ticket">Оформить новый билет</a>
+    </div>
+
+    {% else %}
+
+    <h1>Оформление железнодорожного билета</h1>
+    
+    <form>
+        <div>
+            <div>ФИО пассажира:</div>
+            <input type="text" name="fio" value="{{ fio or '' }}">
+        </div>
+        
+        <div>
+            <div>Возраст:</div>
+            <input type="number" name="age" value="{{ age or '' }}" min="1" max="120">
+        </div>
+        
+        <div>
+            <div>Пункт выезда:</div>
+            <input type="text" name="departure" value="{{ departure or '' }}">
+        </div>
+        
+        <div>
+            <div>Пункт назначения:</div>
+            <input type="text" name="destination" value="{{ destination or '' }}">
+        </div>
+        
+        <div>
+            <div>Дата поездки:</div>
+            <input type="date" name="date" value="{{ date or '' }}">
+        </div>
+        
+        <div>
+            <div>Тип полки:</div>
+            <input type="radio" id="lower" name="shelf" value="нижняя" {{ shelf == 'нижняя' and 'checked' }}>
+            <label for="lower">Нижняя</label>
+            
+            <input type="radio" id="upper" name="shelf" value="верхняя" {{ shelf == 'верхняя' and 'checked' }}>
+            <label for="upper">Верхняя</label>
+            
+            <input type="radio" id="side_upper" name="shelf" value="верхняя боковая" {{ shelf == 'верхняя боковая' and 'checked' }}>
+            <label for="side_upper">Верхняя боковая</label>
+            
+            <input type="radio" id="side_lower" name="shelf" value="нижняя боковая" {{ shelf == 'нижняя боковая' and 'checked' }}>
+            <label for="side_lower">Нижняя боковая</label>
+        </div>
+        
+        <div>
+            <input type="checkbox" id="linen" name="linen" {{ linen == 'on' and 'checked' }}>
+            <label for="linen">С бельём</label>
+        </div>
+        
+        <div>
+            <input type="checkbox" id="baggage" name="baggage" {{ baggage == 'on' and 'checked' }}>
+            <label for="baggage">С багажом</label>
+        </div>
+        
+        <div>
+            <input type="checkbox" id="insurance" name="insurance" {{ insurance == 'on' and 'checked' }}>
+            <label for="insurance">Страховка</label>
+        </div>
+        
+        <div>
+            <button type="submit">Оформить билет</button>
+        </div>
+    </form>
+
+    {% endif %}
+{% endblock %}

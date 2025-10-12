@@ -122,3 +122,68 @@ def settings():
                                        font_style=font_style,
                                        font_weight=font_weight))
     return resp
+
+
+@lab3.route('/lab3/ticket')
+def ticket():
+    errors = {}
+    
+    # Получаем данные из формы
+    fio = request.args.get('fio')
+    age = request.args.get('age')
+    departure = request.args.get('departure')
+    destination = request.args.get('destination')
+    date = request.args.get('date')
+    shelf = request.args.get('shelf')
+    linen = request.args.get('linen')
+    baggage = request.args.get('baggage')
+    insurance = request.args.get('insurance')
+    
+    # Проверка на пустые поля
+    if not fio:
+        errors['fio'] = 'Заполните ФИО пассажира'
+    if not age:
+        errors['age'] = 'Заполните возраст'
+    elif not age.isdigit() or not (1 <= int(age) <= 120):
+        errors['age'] = 'Возраст должен быть от 1 до 120 лет'
+    if not departure:
+        errors['departure'] = 'Заполните пункт выезда'
+    if not destination:
+        errors['destination'] = 'Заполните пункт назначения'
+    if not date:
+        errors['date'] = 'Выберите дату поездки'
+    if not shelf:
+        errors['shelf'] = 'Выберите тип полки'
+    
+    # Если есть ошибки или форма не заполнена, показываем форму
+    if errors or not fio:
+        return render_template('lab3/ticket.html', 
+                             fio=fio, age=age, departure=departure, 
+                             destination=destination, date=date, shelf=shelf,
+                             linen=linen, baggage=baggage, insurance=insurance,
+                             errors=errors)
+    
+    # Рассчитываем стоимость
+    if int(age) < 18:
+        price = 700  # Детский билет
+    else:
+        price = 1000  # Взрослый билет
+    
+    # Доплаты
+    if shelf in ['нижняя', 'нижняя боковая']:
+        price += 100
+    if linen == 'on':
+        price += 75
+    if baggage == 'on':
+        price += 250
+    if insurance == 'on':
+        price += 150
+    
+    # Генерируем номер билета
+    ticket_number = "1"
+    
+    return render_template('lab3/ticket.html', 
+                         fio=fio, age=age, departure=departure, 
+                         destination=destination, date=date, shelf=shelf,
+                         linen=linen, baggage=baggage, insurance=insurance,
+                         price=price, ticket_number=ticket_number)

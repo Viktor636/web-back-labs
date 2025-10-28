@@ -105,19 +105,24 @@ def power():
 
 
 tree_count = 0
+max_trees = 10  # Максимальное количество деревьев
 
 @lab4.route('/lab4/tree', methods = ['GET', 'POST'])
 def tree():
     global tree_count
     if request.method == 'GET':
-        return render_template('lab4/tree.html', tree_count=tree_count)
+        return render_template('lab4/tree.html', tree_count=tree_count, max_trees=max_trees)
     
     operation = request.form.get('operation')
 
     if operation == 'cut':
-        tree_count -= 1
+        # Проверка, чтобы счетчик не ушел в отрицательную область
+        if tree_count > 0:
+            tree_count -= 1
     elif operation == 'plant':
-        tree_count += 1
+        # Проверка, чтобы не превысить максимальное количество
+        if tree_count < max_trees:
+            tree_count += 1
 
     return redirect('/lab4/tree')
 

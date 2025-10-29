@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 5{% endblock %}
+
+{% block main %}
+<style>
+    body {
+        background-color: #e6f7ff; /* светло-голубой фон */
+        margin: 100;
+        padding: 100;
+        min-height: 100vh;
+        position: relative;
+    }
+    
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .nav-links li {
+        background-color: white;
+        border-radius: 8px;
+        padding: 15px 25px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+    
+    .nav-links li:hover {
+        transform: translateY(-2px);
+    }
+    
+    .nav-links a {
+        text-decoration: none;
+        color: #0066cc;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    
+    .nav-links a:hover {
+        color: #004499;
+    }
+    
+    .anonymous {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        color: #666;
+        font-style: italic;
+    }
+</style>
+
+<h1 style="text-align: center; margin-top: 40px;">База знаний</h1>
+<div class="container">
+    <ul class="nav-links">
+        <li><a href="/lab5/login">Вход</a></li>
+        <li><a href="/lab5/register">Регистрация</a></li>
+        <li><a href="/lab5/list">Список статей</a></li>
+        <li><a href="/lab5/create">Создать статью</a></li>
+    </ul>
+</div>
+<div class="anonymous">Анонимус</div>
+{% endblock %}

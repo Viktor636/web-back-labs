@@ -189,11 +189,8 @@ def fridge():
     if not temperature:
         return render_template('lab4/fridge.html', error='Ошибка: не задана температура')
     
-    try:
-        temp = int(temperature)
-    except ValueError:
-        return render_template('lab4/fridge.html', error='Ошибка: температура должна быть числом')
-    
+    temp = int(temperature)
+
     if temp < -12:
         return render_template('lab4/fridge.html', error='Не удалось установить температуру — слишком низкое значение')
     elif temp > -1:
@@ -238,10 +235,7 @@ def grain_order():
     if not weight:
         return render_template('lab4/grain-order.html', error='Ошибка: не указан вес')
     
-    try:
-        weight = float(weight)
-    except ValueError:
-        return render_template('lab4/grain-order.html', error='Ошибка: вес должен быть числом')
+    weight = float(weight)
     
     if weight <= 0:
         return render_template('lab4/grain-order.html', error='Ошибка: вес должен быть положительным числом')

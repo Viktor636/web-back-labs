@@ -3,16 +3,119 @@
 {% block lab %}Лабораторная работа 5{% endblock %}
 
 {% block main %}
-    <h1>Статьи</h1>
+<style>
+    .articles-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .article {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-left: 4px solid #4CAF50;
+    }
+    
+    .article h2 {
+        color: #2c3e50;
+        margin-top: 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+    
+    .article-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 14px;
+        display: inline-block;
+    }
+    
+    .btn-edit {
+        background-color: #3498db;
+        color: white;
+    }
+    
+    .btn-edit:hover {
+        background-color: #2980b9;
+    }
+    
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+    }
+    
+    .btn-delete:hover {
+        background-color: #c0392b;
+    }
+    
+    .no-articles {
+        text-align: center;
+        padding: 40px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .no-articles h2 {
+        color: #7f8c8d;
+        margin-bottom: 15px;
+    }
+    
+    .nav-links {
+        margin-top: 30px;
+        text-align: center;
+    }
+    
+    .nav-links a {
+        color: #3498db;
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: bold;
+    }
+    
+    .nav-links a:hover {
+        text-decoration: underline;
+    }
+</style>
 
-    {% for article in articles %}
-        <h2>{{ article['title'] }}</h2>
-        <blockquote>{{ article['article_text'] }}</blockquote>
-    {% endfor %}
+<div class="articles-container">
+    <h1>Мои статьи</h1>
 
-    <div>
+    {% if articles %}
+        {% for article in articles %}
+            <div class="article">
+                <h2>{{ article['title'] }}</h2>
+                <blockquote>{{ article['article_text'] }}</blockquote>
+                <div class="article-actions">
+                    <a href="/lab5/edit/{{ article['id'] }}" class="btn btn-edit">Редактировать</a>
+                    <a href="/lab5/delete/{{ article['id'] }}" class="btn btn-delete" 
+                       onclick="return confirm('Вы уверены, что хотите удалить эту статью?')">Удалить</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-articles">
+            <h2>У вас пока нет статей</h2>
+            <p>Создайте свою первую статью, чтобы она появилась здесь!</p>
+        </div>
+    {% endif %}
+
+    <div class="nav-links">
         <a href="/lab5/create">Создать статью</a> | 
-        <a href="/lab5/">На главную</a>
+        <a href="/lab5/">На главную</a> |
+        <a href="/lab5/logout">Выйти</a>
     </div>
-
+</div>
 {% endblock %}

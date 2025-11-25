@@ -24,10 +24,15 @@ function getOfficeList() {
         const ul = document.getElementById('office-list');
         ul.innerHTML = ''; // Очищаем список перед обновлением
         
+        let totalCost = 0;
+        let userBookings = 0;
+        
         for(let i = 0; i < office_list.length; i++) {
             const office = office_list[i];
             const li = document.createElement('li');
-            li.innerText = `Офис ${office.number}: ${office.tenant || 'свободен'}`;
+            
+            // Отображаем номер офиса, статус и цену
+            li.innerHTML = `Офис ${office.number}: ${office.tenant || 'свободен'} - ${office.price} руб./мес.`;
 
             // Кнопка для бронирования (только для свободных офисов)
             if (!office.tenant) {
@@ -41,9 +46,26 @@ function getOfficeList() {
                 cancelButton.innerText = 'освободить';
                 cancelButton.onclick = function() {cancellation(office.number)};
                 li.appendChild(cancelButton);
+            
+                if (office.tenant === 'current_user') {
+                    totalCost += office.price;
+                    userBookings++;
+                }
             }
 
             ul.appendChild(li);
+        }
+        
+        // Обновляем блок с общей стоимостью
+        const totalCostElement = document.getElementById('total-cost');
+        if (userBookings > 0) {
+            totalCostElement.innerHTML = `
+                <h3>Ваша аренда:</h3>
+                <p>Арендовано офисов: ${userBookings}</p>
+                <p>Общая стоимость: ${totalCost} руб./мес.</p>
+            `;
+        } else {
+            totalCostElement.innerHTML = '<p>У вас нет арендованных офисов</p>';
         }
     });
 }
@@ -132,4 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
 {% block main %}
     <h1>Список кабинетов</h1>
     <ul id="office-list"></ul>
+    <div id="total-cost">
+        <p>У вас нет арендованных офисов</p>
+    </div>
 {% endblock %}

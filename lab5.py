@@ -123,12 +123,12 @@ def create():
     else:
         cur.execute(f"SELECT * FROM users WHERE login=?;", (login, ))
 
-    user_id = cur.fetchone()["id"]
+    login_id = cur.fetchone()["id"]
 
     if current_app.config['DB_TYPE'] == 'posrgres':
-        cur.execute(f"INSERT INTO articles(user_id, title, article_text) VALUES (%s, %s, %s);", (user_id, title, article_text))
+        cur.execute(f"INSERT INTO articles(login_id, title, article_text) VALUES (%s, %s, %s);", (login_id, title, article_text))
     else:
-        cur.execute(f"INSERT INTO articles(user_id, title, article_text) VALUES (?, ?, ?);", (user_id, title, article_text))
+        cur.execute(f"INSERT INTO articles(login_id, title, article_text) VALUES (?, ?, ?);", (login_id, title, article_text))
 
     db_close(conn, cur)
     return redirect('/lab5')
@@ -147,12 +147,12 @@ def list_articles():
     else:
         cur.execute(f"SELECT id FROM users WHERE login=?;", (login, ))
 
-    user_id = cur.fetchone()["id"]
+    login_id = cur.fetchone()["id"]
 
     if current_app.config['DB_TYPE'] == 'posrgres':
-        cur.execute(f"SELECT * FROM articles WHERE user_id=%s;", (user_id, ))
+        cur.execute(f"SELECT * FROM articles WHERE login_id=%s;", (login_id, ))
     else:
-        cur.execute(f"SELECT * FROM articles WHERE user_id=?;", (user_id, ))
+        cur.execute(f"SELECT * FROM articles WHERE login_id=?;", (login_id, ))
 
     articles = cur.fetchall()
 
@@ -171,13 +171,13 @@ def edit_article(article_id):
     if current_app.config['DB_TYPE'] == 'postgres':
         cur.execute("""
             SELECT a.* FROM articles a 
-            JOIN users u ON a.user_id = u.id 
+            JOIN users u ON a.login_id = u.id 
             WHERE a.id = %s AND u.login = %s;
         """, (article_id, login))
     else:
         cur.execute("""
             SELECT a.* FROM articles a 
-            JOIN users u ON a.user_id = u.id 
+            JOIN users u ON a.login_id = u.id 
             WHERE a.id = ? AND u.login = ?;
         """, (article_id, login))
 
@@ -233,13 +233,13 @@ def delete_article(article_id):
     if current_app.config['DB_TYPE'] == 'postgres':
         cur.execute("""
             SELECT a.* FROM articles a 
-            JOIN users u ON a.user_id = u.id 
+            JOIN users u ON a.login_id = u.id 
             WHERE a.id = %s AND u.login = %s;
         """, (article_id, login))
     else:
         cur.execute("""
             SELECT a.* FROM articles a 
-            JOIN users u ON a.user_id = u.id 
+            JOIN users u ON a.login_id = u.id 
             WHERE a.id = ? AND u.login = ?;
         """, (article_id, login))
 

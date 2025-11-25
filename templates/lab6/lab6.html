@@ -22,15 +22,26 @@ function getOfficeList() {
     .then(function(data) {
         const office_list = data.result;
         const ul = document.getElementById('office-list');
+        ul.innerHTML = ''; // Очищаем список перед обновлением
+        
         for(let i = 0; i < office_list.length; i++) {
             const office = office_list[i];
             const li = document.createElement('li');
-            li.innerText = `${office.number}: ${office.tenant || 'свободен'}`;
+            li.innerText = `Офис ${office.number}: ${office.tenant || 'свободен'}`;
 
-            const bookingButton = document.createElement('button');
-            bookingButton.innerText = 'зарезервировать';
-            bookingButton.onclick = function() {booking(office.number)};
-            li.appendChild(bookingButton);
+            // Кнопка для бронирования (только для свободных офисов)
+            if (!office.tenant) {
+                const bookingButton = document.createElement('button');
+                bookingButton.innerText = 'зарезервировать';
+                bookingButton.onclick = function() {booking(office.number)};
+                li.appendChild(bookingButton);
+            } else {
+                // Кнопка для освобождения (только для занятых офисов)
+                const cancelButton = document.createElement('button');
+                cancelButton.innerText = 'освободить';
+                cancelButton.onclick = function() {cancellation(office.number)};
+                li.appendChild(cancelButton);
+            }
 
             ul.appendChild(li);
         }
@@ -65,13 +76,12 @@ function booking(officeNumber) {
                 case -32601:
                     alert('Странная ошибка');
                     break;
-                }
-        }
-        else {
+            }
+        } else {
             document.getElementById('office-list').innerHTML = '';
-        getOfficeList();
-    };
-});
+            getOfficeList();
+        }
+    });
 }
 
 function cancellation(officeNumber) {

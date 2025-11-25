@@ -3,6 +3,133 @@
 {% block lab %}Лабораторная работа 6{% endblock %}
 
 {% block script %}
+<style>
+    .office-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .office-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .office-item {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .office-item:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
+    }
+
+    .office-info {
+        flex-grow: 1;
+    }
+
+    .office-number {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #2c3e50;
+    }
+
+    .office-status {
+        font-style: italic;
+        margin: 5px 0;
+    }
+
+    .office-price {
+        font-weight: bold;
+        color: #27ae60;
+        font-size: 1.1em;
+    }
+
+    .booked {
+        border-left: 5px solid #e74c3c;
+        background: #fff5f5;
+    }
+
+    .free {
+        border-left: 5px solid #27ae60;
+        background: #f8fff8;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        margin-left: 10px;
+    }
+
+    .btn-book {
+        background: #3498db;
+        color: white;
+    }
+
+    .btn-book:hover {
+        background: #2980b9;
+    }
+
+    .btn-cancel {
+        background: #e74c3c;
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background: #c0392b;
+    }
+
+    .total-cost {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .total-cost h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.3em;
+    }
+
+    .total-amount {
+        font-size: 2em;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .no-bookings {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        color: #6c757d;
+        border: 2px dashed #dee2e6;
+    }
+
+    .page-title {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 2em;
+    }
+</style>
+
 <script>
 function getOfficeList() {
     const url = '/lab6/json-rpc-api/';
@@ -22,7 +149,7 @@ function getOfficeList() {
     .then(function(data) {
         const office_list = data.result;
         const ul = document.getElementById('office-list');
-        ul.innerHTML = ''; // Очищаем список перед обновлением
+        ul.innerHTML = '';
         
         let totalCost = 0;
         let userBookings = 0;
@@ -30,29 +157,42 @@ function getOfficeList() {
         for(let i = 0; i < office_list.length; i++) {
             const office = office_list[i];
             const li = document.createElement('li');
+            li.className = `office-item ${office.tenant ? 'booked' : 'free'}`;
             
-            // Отображаем номер офиса, статус и цену
-            li.innerHTML = `Офис ${office.number}: ${office.tenant || 'свободен'} - ${office.price} руб./мес.`;
+            const status = office.tenant ? `Арендован: ${office.tenant}` : 'Свободен';
+            const statusClass = office.tenant ? 'status-booked' : 'status-free';
+            
+            li.innerHTML = `
+                <div class="office-info">
+                    <div class="office-number">Офис №${office.number}</div>
+                    <div class="office-status ${statusClass}">${status}</div>
+                    <div class="office-price">${office.price} руб./месяц</div>
+                </div>
+            `;
 
-            // Кнопка для бронирования (только для свободных офисов)
+            const buttonContainer = document.createElement('div');
+            
             if (!office.tenant) {
                 const bookingButton = document.createElement('button');
-                bookingButton.innerText = 'зарезервировать';
+                bookingButton.className = 'btn btn-book';
+                bookingButton.innerText = 'Арендовать';
                 bookingButton.onclick = function() {booking(office.number)};
-                li.appendChild(bookingButton);
+                buttonContainer.appendChild(bookingButton);
             } else {
-                // Кнопка для освобождения (только для занятых офисов)
                 const cancelButton = document.createElement('button');
-                cancelButton.innerText = 'освободить';
+                cancelButton.className = 'btn btn-cancel';
+                cancelButton.innerText = 'Освободить';
                 cancelButton.onclick = function() {cancellation(office.number)};
-                li.appendChild(cancelButton);
-            
-                if (office.tenant === 'current_user') {
+                buttonContainer.appendChild(cancelButton);
+                
+                // В реальном приложении здесь была бы проверка текущего пользователя
+                if (office.tenant) {
                     totalCost += office.price;
                     userBookings++;
                 }
             }
 
+            li.appendChild(buttonContainer);
             ul.appendChild(li);
         }
         
@@ -60,12 +200,14 @@ function getOfficeList() {
         const totalCostElement = document.getElementById('total-cost');
         if (userBookings > 0) {
             totalCostElement.innerHTML = `
-                <h3>Ваша аренда:</h3>
-                <p>Арендовано офисов: ${userBookings}</p>
-                <p>Общая стоимость: ${totalCost} руб./мес.</p>
+                <h3>Ваша текущая аренда</h3>
+                <div class="total-amount">${totalCost} руб.</div>
+                <p>в месяц за ${userBookings} офис(ов)</p>
             `;
+            totalCostElement.className = 'total-cost';
         } else {
             totalCostElement.innerHTML = '<p>У вас нет арендованных офисов</p>';
+            totalCostElement.className = 'no-bookings';
         }
     });
 }
@@ -100,7 +242,6 @@ function booking(officeNumber) {
                     break;
             }
         } else {
-            document.getElementById('office-list').innerHTML = '';
             getOfficeList();
         }
     });
@@ -139,7 +280,6 @@ function cancellation(officeNumber) {
                     break;
             }
         } else {
-            document.getElementById('office-list').innerHTML = '';
             getOfficeList();
         }
     });
@@ -152,9 +292,13 @@ document.addEventListener('DOMContentLoaded', function() {
 {% endblock %}
 
 {% block main %}
-    <h1>Список кабинетов</h1>
-    <ul id="office-list"></ul>
-    <div id="total-cost">
+<div class="office-container">
+    <h1 class="page-title">🏢 Аренда офисов</h1>
+    
+    <ul class="office-list" id="office-list"></ul>
+    
+    <div id="total-cost" class="no-bookings">
         <p>У вас нет арендованных офисов</p>
     </div>
+</div>
 {% endblock %}

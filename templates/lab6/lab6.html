@@ -185,7 +185,6 @@ function getOfficeList() {
                 cancelButton.onclick = function() {cancellation(office.number)};
                 buttonContainer.appendChild(cancelButton);
                 
-                // В реальном приложении здесь была бы проверка текущего пользователя
                 if (office.tenant) {
                     totalCost += office.price;
                     userBookings++;

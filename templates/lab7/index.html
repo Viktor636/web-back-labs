@@ -5,17 +5,99 @@
 {% block script %}
 <script src="{{ url_for('static', filename='lab7/main.js') }}"></script>
 <style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
 .modal {
     display: none;
     z-index: 100;
-    box-shadow: 3px 3px 5px black;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
     background: white;
-    width: 400px;
+    width: 500px;
     left: 50%;
-    top: 220px;
-    margin-left: -220px;
-    position: absolute;
-    padding: 20px;
+    top: 150px;
+    margin-left: -250px;
+    position: fixed;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.modal input, .modal textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.modal textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.modal button {
+    margin-right: 10px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.original-title {
+    font-style: italic;
+    color: #666;
+    font-size: 0.9em;
 }
 .error-message {
     color: red;

@@ -9,13 +9,22 @@ function fillFilmList() {
         for(let i = 0; i<films.length; i++) {
             let tr = document.createElement('tr');
 
-            let tdTitle = document.createElement('td');
             let tdTitleRus = document.createElement('td');
+            let tdTitle = document.createElement('td');
             let tdYear = document.createElement('td');
             let tdActions = document.createElement('td');
 
-            tdTitle.innerText = films[i].title == films[i].title_ru ? '' : films[i].title;
+            // Русское название - основное
             tdTitleRus.innerText = films[i].title_ru;
+
+            // Оригинальное название - второстепенное
+            if (films[i].title && films[i].title !== films[i].title_ru) {
+                let originalSpan = document.createElement('span');
+                originalSpan.className = 'original-title';
+                originalSpan.innerText = ` (${films[i].title})`;
+                tdTitleRus.appendChild(originalSpan);
+            }
+            
             tdYear.innerText = films[i].year;
 
             let editButton = document.createElement('button');
@@ -33,7 +42,7 @@ function fillFilmList() {
             tdActions.append(editButton);
             tdActions.append(delButton);
 
-            tr.append(tdTitle);
+            // Меняем порядок: сначала русское название, потом год
             tr.append(tdTitleRus);
             tr.append(tdYear);
             tr.append(tdActions);
